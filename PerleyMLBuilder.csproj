@@ -85,14 +85,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartupLogic\StartupMLBuilder.cs" />
     <Compile Include="BashCommandLogic\BashCommander.cs" />
-    <Compile Include="Json\JsonController.cs" />
     <Compile Include="DataConverterWindow.cs" />
     <Compile Include="gtk-gui\TestApp.DataConverterWindow.cs" />
+    <Compile Include="DataConversion\FileCrud.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="StartupLogic\" />
     <Folder Include="BashCommandLogic\" />
-    <Folder Include="Json\" />
+    <Folder Include="DataConversion\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.RegularExpressions;
 using Gtk;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using TestApp.DataConversion;
 
 namespace TestApp
 {
@@ -15,86 +12,43 @@ namespace TestApp
             this.Build();
             openFileButton.Clicked += getDataClicked;
             openFolderButton.Clicked += getOutputPath;
-            ConvertButton.Clicked += ConvertData;
+            ConvertButton.Clicked += DataConvert;
         }
 
-        private void ConvertData(object sender, EventArgs e)
+        private void DataConvert(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(dataSourceEntry.Text) || string.IsNullOrEmpty(newFileNameEntry.Text) || string.IsNullOrEmpty(outputPathEntry.Text) || string.IsNullOrEmpty(PropertiesToAddEntry.Text))
             {
-                MessageDialog md = new MessageDialog(this,
-                DialogFlags.DestroyWithParent, MessageType.Info,
-                ButtonsType.Close, "Missing fields, please make sure all data fields are filled in...");
-                md.Run();
-                md.Destroy();
-                return;
+                ShowMessage("Missing fields, please make sure all data fields are filled in...");
             }
 
-            List<object> items = new List<object>();
-            string data = string.Empty;
-
-            using (StreamReader sr = new StreamReader(dataSourceEntry.Text))
+            try
             {
-                data = sr.ReadToEnd();
-                sr.Close();
-            }
-
-            //build file;
-            string tsvData = string.Empty;
-
-            //build file header
-            string headerValue = "";
-            var split = Regex.Split(PropertiesToAddEntry.Text, ",");
-            bool stringstart = true;
-            foreach (var item in split)
-            {
-                if (stringstart)
+                FileCrud fileCrud = new FileCrud();
+                string data = fileCrud.DataSourceReader(dataSourceEntry.Text);
+                string[] split = Regex.Split(PropertiesToAddEntry.Text, ",");
+                string header = fileCrud.BuildHeader(PropertiesToAddEntry.Text, split);
+                string tsvdata = string.Empty;
+                tsvdata += header;
+                string newtsv = fileCrud.BuildFile(data, split);
+                bool success = fileCrud.WriteDataToTSV(outputPathEntry.Text, newFileNameEntry.Text, newtsv);
+                if (success)
                 {
-                    headerValue += item;
-                    stringstart = false;
+                    ShowMessage("Success! new file created.");
                 }
                 else
                 {
-                    headerValue += "\t" + item;
+                    ShowMessage("Failed to create new file. Please try again");
                 }
             }
-            //set header for file
-            tsvData += headerValue; 
-
-            //build file data
-            items = JsonConvert.DeserializeObject<List<object>>(data);
-            foreach (var item in items)
+            catch (Exception ex)
             {
-                string json = JsonConvert.SerializeObject(item);
-                dynamic d = JObject.Parse(json);
-                Console.WriteLine(d);
-
-                bool propstart = true;
-                foreach (string property in split)
-                {
-                    if (propstart)
-                    {
-                        tsvData += "\n";
-                        tsvData += d[property];
-                        propstart = false;
-                    }
-                    else
-                    {
-                        tsvData += "\t" + d[property];
-                    }
-                }
-            }
-
-            using (StreamWriter sw = new StreamWriter(outputPathEntry.Text + 
-                "/" + 
-                newFileNameEntry.Text + 
-                ".tsv"))
-            {
-                sw.Write(tsvData);
-                sw.Close();
+                Console.WriteLine(ex);
+                ShowMessage("Error: something has gone very wrong, please try again. Ensure all fields are filled in properly, and with proper spelling.");
             }
         }
 
+        #region ButtonRegion
         private void getOutputPath(object sender, EventArgs e)
         {
             Gtk.FileChooserDialog fcd = new Gtk.FileChooserDialog("Open File", null, Gtk.FileChooserAction.SelectFolder);
@@ -107,6 +61,16 @@ namespace TestApp
             if (response == Gtk.ResponseType.Ok)
                 outputPathEntry.Text = fcd.CurrentFolder;
             fcd.Destroy();
+        }
+
+        private void ShowMessage(string message)
+        {
+            MessageDialog md = new MessageDialog(this,
+                DialogFlags.DestroyWithParent, MessageType.Info,
+                ButtonsType.Close, message);
+            md.Run();
+            md.Destroy();
+            return;
         }
 
         private void getDataClicked(object sender, EventArgs e)
@@ -122,5 +86,6 @@ namespace TestApp
                 dataSourceEntry.Text = fcd.Filename;
             fcd.Destroy();
         }
+        #endregion
     }
 }

@@ -1,0 +1,7 @@
+/home/matt/Projects/TestApp/TestApp/bin/Debug/TestApp.exe
+/home/matt/Projects/TestApp/TestApp/bin/Debug/TestApp.pdb
+/home/matt/Projects/TestApp/TestApp/bin/Debug/Newtonsoft.Json.dll
+/home/matt/Projects/TestApp/TestApp/bin/Debug/Newtonsoft.Json.xml
+/home/matt/Projects/TestApp/TestApp/obj/x86/Debug/PerleyMLBuilder.csproj.CopyComplete
+/home/matt/Projects/TestApp/TestApp/obj/x86/Debug/TestApp.exe
+/home/matt/Projects/TestApp/TestApp/obj/x86/Debug/TestApp.pdb
