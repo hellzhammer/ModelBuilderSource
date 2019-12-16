@@ -61,7 +61,6 @@ public partial class MainWindow : Gtk.Window
     protected void OnDeleteEvent(object sender, DeleteEventArgs a)
     {
         bash.modelBuildProc.Dispose();
-        bash = null;
         Application.Quit();
         a.RetVal = true;
     }

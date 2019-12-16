@@ -30,8 +30,8 @@ namespace TestApp
                 string header = fileCrud.BuildHeader(PropertiesToAddEntry.Text, split);
                 string tsvdata = string.Empty;
                 tsvdata += header;
-                string newtsv = fileCrud.BuildFile(data, split);
-                bool success = fileCrud.WriteDataToTSV(outputPathEntry.Text, newFileNameEntry.Text, newtsv);
+                tsvdata += fileCrud.BuildFile(data, split);
+                bool success = fileCrud.WriteDataToTSV(outputPathEntry.Text, newFileNameEntry.Text, tsvdata);
                 if (success)
                 {
                     ShowMessage("Success! new file created.");
