@@ -29,9 +29,9 @@ namespace TestApp.BashCommandLogic
             modelBuildProc.Start();
         }
 
-        public string ModelBuildCommandBuilder(string datapath, string labelcolumn, string ignorecolumns, bool hasheader, double maxexplorationtime)
+        public string ModelBuildCommandBuilder(string classifyType,string datapath, string labelcolumn, string ignorecolumns, bool hasheader, double maxexplorationtime)
         {
-            string mlTask = "mlnet auto-train --task multiclass-classification ";
+            string mlTask = "mlnet auto-train --task " + classifyType + " ";
 
             string mlData = "--dataset " + datapath + " ";
 

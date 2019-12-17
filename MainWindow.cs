@@ -32,7 +32,7 @@ public partial class MainWindow : Gtk.Window
         }
 
 
-        string commander = bash.ModelBuildCommandBuilder(datapathentry.Text, labelcolumnentry.Text, ignorecolumnentry.Text, headerCheckBox.Active, explorationTimeSpinner.Value);
+        string commander = bash.ModelBuildCommandBuilder(modeloutputentry.Text, datapathentry.Text, labelcolumnentry.Text, ignorecolumnentry.Text, headerCheckBox.Active, explorationTimeSpinner.Value);
 
         string newConsole = "gnome-terminal -x bash -ic '" + commander + "; ls; bash'";
 
