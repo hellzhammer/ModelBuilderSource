@@ -12,6 +12,12 @@ public partial class MainWindow : Gtk.Window
         getdatapathbutton.Clicked += SelectData;
         buildbutton.Clicked += RunBuilder;
         ConvertDataButton.Clicked += JSONConverterOpen;
+        OpenDataBuilderButton.Clicked += JSONBuilderOpen;
+    }
+
+    private void JSONBuilderOpen(object sender, EventArgs e)
+    {
+        MSGConverterWindow gcw = new MSGConverterWindow();
     }
 
     private void JSONConverterOpen(object sender, EventArgs e)

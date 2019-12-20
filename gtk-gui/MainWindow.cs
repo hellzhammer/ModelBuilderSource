@@ -43,6 +43,8 @@ public partial class MainWindow
 
 	private global::Gtk.Button ConvertDataButton;
 
+	private global::Gtk.Button OpenDataBuilderButton;
+
 	protected virtual void Build()
 	{
 		global::Stetic.Gui.Initialize(this);
@@ -231,11 +233,22 @@ public partial class MainWindow
 		this.hbox1.Add(this.ConvertDataButton);
 		global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.ConvertDataButton]));
 		w18.Position = 1;
-		this.vbox1.Add(this.hbox1);
-		global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
-		w19.Position = 8;
+		// Container child hbox1.Gtk.Box+BoxChild
+		this.OpenDataBuilderButton = new global::Gtk.Button();
+		this.OpenDataBuilderButton.CanFocus = true;
+		this.OpenDataBuilderButton.Name = "OpenDataBuilderButton";
+		this.OpenDataBuilderButton.UseUnderline = true;
+		this.OpenDataBuilderButton.Label = global::Mono.Unix.Catalog.GetString("Open Data Builder");
+		this.hbox1.Add(this.OpenDataBuilderButton);
+		global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.OpenDataBuilderButton]));
+		w19.Position = 2;
 		w19.Expand = false;
 		w19.Fill = false;
+		this.vbox1.Add(this.hbox1);
+		global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
+		w20.Position = 8;
+		w20.Expand = false;
+		w20.Fill = false;
 		this.Add(this.vbox1);
 		if ((this.Child != null))
 		{

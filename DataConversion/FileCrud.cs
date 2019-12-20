@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -117,6 +118,15 @@ namespace TestApp.DataConversion
             }
 
             return tsvData;
+        }
+
+        public static async void AutomatedLearning(List<string> msgs)
+        {
+            foreach (var item in msgs)
+            {
+                await Task.Delay(500);
+                MainClass.client.SendMessage(item, "perleyBrain/PerleyCentralNode");
+            }
         }
     }
 }
